@@ -49,6 +49,8 @@ docker\:up:
 docker\:magento:
 	@echo "$(call yellow, 'Up all containers')"
 	@docker-compose -f docker-compose.yml up -d redis elastic mysql magento nginx varnish chrome
+	@echo "$(call yellow, 'Show containers statuses')"
+	@docker-compose ps $(call args)
 
 docker\:down:
 	@echo "$(call yellow, 'Down all containers')"
@@ -78,7 +80,7 @@ docker\:build:
 	@echo "$(call yellow,'Start build containers')"
 	@docker-compose -f docker-compose.yml build $(call args)
 
-docker\:magic: docker\:down docker\:build docker\:magento
+docker\:magic: docker\:down docker\:build docker\:magento docker\:ps
 
 mg:
 	@echo "$(call yellow,'Opens magento application container')"

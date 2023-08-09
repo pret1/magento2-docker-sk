@@ -14,12 +14,18 @@ ENV PHP_NODE_NPM_HOME ${PHP_NODE_NPM_HOME}
 ENV PHP_NODE_NPM_CONFIG ${PHP_NODE_NPM_CONFIG}
 RUN mkdir -p $PHP_NODE_NPM_HOME $PHP_NODE_NPM_CONFIG
 
+RUN apt-get update \
+  && apt-get install -y
 # install node.js
 RUN curl -sL https://deb.nodesource.com/setup_14.x | bash -
 RUN apt-get install -y nodejs
 RUN apt-get install -y fontconfig
-RUN npm install -g grunt
-RUN npm install phantomjs
+RUN apt-get update && apt-get upgrade -y && \
+    apt-get install -y nodejs \
+    npm
+RUN apt-get update
+RUN npm install -g grunt-cli
+RUN npm install phantomjs-prebuilt
 
 # Install dependencies
 RUN apt-get update \
